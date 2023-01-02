@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'http://www.retrogamer.net/wp-content/uploads/2014/05/Metroid.png',
     'https://www.retrogamer.net/wp-content/uploads/2014/05/legend-of-zelda-616x577.png'
   ];
+
   int _current = 0;
   final CarouselController _controller = CarouselController();
   @override
@@ -30,45 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           shrinkWrap: true,
           children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                  autoPlay: false,
-                  aspectRatio: 2,
-                  viewportFraction: 1,
-                  onPageChanged: (index, carouselReason) {
-                    setState(() {
-                      _current = index;
-                    });
-                  }),
-              items: imgList
-                  .map((item) => Container(
-                        child: Image.network(
-                          item!,
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ))
-                  .toList(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: imgList.asMap().entries.map((entry) {
-                return GestureDetector(
-                  onTap: () => _controller.animateToPage(entry.key),
-                  child: Container(
-                    width: 12.0,
-                    height: 12.0,
-                    margin:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: (Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white
-                                : Colors.black)
-                            .withOpacity(_current == entry.key ? 0.9 : 0.4)),
-                  ),
-                );
-              }).toList(),
-            ),
+            CarouselWidget(),
             BoxworkWidget(),
           ],
         ),

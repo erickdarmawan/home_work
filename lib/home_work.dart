@@ -7,4 +7,4 @@ export './models/data_user.dart';
 export './models/register_user.dart';
 export './models/boxwork.dart';
 export './widgets/boxwork_widget.dart';
-
+export './widgets/carousel_widget.dart';
