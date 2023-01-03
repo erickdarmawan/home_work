@@ -61,32 +61,36 @@ class _BoxworkWidgetState extends State<BoxworkWidget> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4, mainAxisSpacing: 2, crossAxisSpacing: 6),
+            crossAxisCount: 4, mainAxisSpacing: 1, crossAxisSpacing: 1),
         itemCount: allBoxWork.length,
         itemBuilder: ((context, index) {
           var inBoxWork = allBoxWork[index];
 
           return GridTile(
-            child: Container(
-                padding: EdgeInsets.only(top: 10),
-                decoration: BoxDecoration(
+            child: Card(
+              shadowColor: Colors.indigo,
+              elevation: 5,
+              child: Container(
+                  padding: EdgeInsets.only(top: 5),
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.indigo.shade200),
-                alignment: AlignmentDirectional.center,
-                margin: const EdgeInsets.only(
-                  top: 15,
-                ),
-                child: Column(children: [
-                  Icon(
-                    inBoxWork.workIcon,
-                    color: inBoxWork.color,
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    inBoxWork.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  alignment: AlignmentDirectional.center,
+                  margin: const EdgeInsets.only(
+                    top: 15,
                   ),
-                ])),
+                  child: Column(children: [
+                    Icon(
+                      inBoxWork.workIcon,
+                      color: inBoxWork.color,
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      inBoxWork.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ])),
+            ),
           );
         }));
   }

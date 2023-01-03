@@ -10,29 +10,103 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String?> imgList = [
-    'https://www.retrogamer.net/wp-content/uploads/2014/05/DuckHunt-616x390.png',
-    'http://retrogamermag.wpengine.com/wp-content/uploads/2014/05/SuperMarioBros-616x388.png',
-    'https://www.retrogamer.net/wp-content/uploads/2014/05/MegaMan2-616x391.png',
-    'https://www.retrogamer.net/wp-content/uploads/2014/05/Punchout-616x391.png',
-    'http://www.retrogamer.net/wp-content/uploads/2014/05/Metroid.png',
-    'https://www.retrogamer.net/wp-content/uploads/2014/05/legend-of-zelda-616x577.png'
-  ];
-
-  int _current = 0;
   final CarouselController _controller = CarouselController();
+  final _workTextController = TextEditingController();
+  String _workTitle = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       drawer: Drawer(),
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () async {
+                bool? isLogOut = await showDialog(
+                    context: context,
+                    builder: (builder) {
+                      return AlertDialog(
+                        title: Text('Log Out?'),
+                        content: Text('Are you sure you want to log out?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(false),
+                            child: Text('No'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(true),
+                            child: Text('Yes'),
+                          )
+                        ],
+                      );
+                    });
+              },
+              icon: Icon(Icons.logout_outlined)),
+        ],
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: ListView(
           shrinkWrap: true,
           children: [
             CarouselWidget(),
-            BoxworkWidget(),
+            Divider(
+              color: Colors.indigo,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0, left: 8, right: 8),
+              child: BoxworkWidget(),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.white, Colors.blueGrey]),
+                  border: Border.all(color: Colors.indigo),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  )),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _workTextController,
+                            decoration: InputDecoration(
+                                hintText: 'What is my work today?',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: BorderSide(width: 0.5)),
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 16)),
+                            onChanged: (value) {
+                              setState(() {
+                                _workTitle = value;
+                              });
+                            },
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Icon(Icons.add),
+                          style:
+                              ElevatedButton.styleFrom(shape: CircleBorder()),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
